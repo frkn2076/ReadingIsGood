@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.2.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.5.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Shared.Extensions\Shared.Extensions.csproj" />
+    <ProjectReference Include="..\..\Shared\Shared.Helper\Shared.Helper.csproj" />
+    <ProjectReference Include="..\..\Shared\Shared.Messages\Shared.Messages.csproj" />
+    <ProjectReference Include="..\Product.Business\Product.Business.csproj" />
+  </ItemGroup>
+
+</Project>

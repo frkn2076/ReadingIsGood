@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Shared.Error\Shared.Error.csproj" />
+    <ProjectReference Include="..\Product.Infra\Product.Infra.csproj" />
+    <ProjectReference Include="..\Product.Repository\Product.Repository.csproj" />
+  </ItemGroup>
+
+</Project>
