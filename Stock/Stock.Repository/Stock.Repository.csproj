@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Shared.Audit\Shared.Audit.csproj" />
+    <ProjectReference Include="..\Stock.DataAccess\Stock.DataAccess.csproj" />
+  </ItemGroup>
+
+</Project>
