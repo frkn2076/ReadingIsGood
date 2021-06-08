@@ -17,7 +17,20 @@
         "Period": "1m",
         "PeriodTimespan": 600,
         "Limit": 30
-      }
+      },
+      "SwaggerKey": "Account"
+    }
+  ],
+  "SwaggerEndPoints": [
+    {
+      "Key": "Account",
+      "Config": [
+        {
+          "Name": "Account.Api",
+          "Version": "v1",
+          "Url": "https://localhost:5001/swagger/v1/swagger.json"
+        }
+      ]
     }
   ],
   "GlobalConfiguration": {
