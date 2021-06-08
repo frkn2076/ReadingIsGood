@@ -11,13 +11,13 @@ namespace Product.Business.Implementation
 {
     public class BusinessManager : IBusinessManager
     {
-        private readonly IProductionRepository _productionRepository;
+        private readonly IProductRepository _productRepository;
 
-        public BusinessManager(IProductionRepository productionRepository) => _productionRepository = productionRepository;
+        public BusinessManager(IProductRepository productRepository) => _productRepository = productRepository;
 
         private async Task<List<ProductResponseDTO>> GetAllProducts()
         {
-            var productEntities = await _productionRepository.GetProductsAsync();
+            var productEntities = await _productRepository.GetProductsAsync();
 
             var response = productEntities.Adapt<List<ProductResponseDTO>>();
 
@@ -26,8 +26,8 @@ namespace Product.Business.Implementation
 
         private async Task<List<ProductResponseDTO>> GetProductsInterval(ProductIntervalRequestDTO model)
         {
-            var productEntities = await _productionRepository.GetProductsIntervalAsync(model.StartIndex, model.Count);
-            if(productEntities is null || productEntities.Count == 0)
+            var productEntities = await _productRepository.GetProductsIntervalAsync(model.StartIndex, model.Count);
+            if (productEntities is null || productEntities.Count == 0)
                 throw new ProductNotFoundException();
 
             var response = productEntities.Adapt<List<ProductResponseDTO>>();
@@ -37,7 +37,7 @@ namespace Product.Business.Implementation
 
         private async Task<ProductResponseDTO> GetProduct(int id)
         {
-            var product = await _productionRepository.GetProductAsync(id);
+            var product = await _productRepository.GetProductAsync(id);
             if (product is null)
                 throw new ProductNotFoundException();
 
@@ -48,24 +48,35 @@ namespace Product.Business.Implementation
 
         private async Task<int> AddProduct(ProductRequestDTO model)
         {
-            var productionEntity = model.Adapt<Production>();
+            var productEntity = model.Adapt<ProductEntity>();
 
-            var product = await _productionRepository.InsertAsync(productionEntity);
+            var isExist = await _productRepository.IsExistAsync(productEntity);
+            if (isExist)
+                throw new ProductAlreadyExistsException();
+
+            var product = await _productRepository.InsertAsync(productEntity);
             if (product is null)
                 throw new SomethingWentWrongDuringDatabaseOperationException();
 
-            var response = await _productionRepository.SaveChangesAsync();
+            var response = await _productRepository.SaveChangesAsync();
 
             return response;
         }
 
         private async Task<int> AddProducts(IReadOnlyList<ProductRequestDTO> model)
         {
-            var productions = model.Adapt<List<Production>>();
+            var products = model.Adapt<List<ProductEntity>>();
 
-            productions.ForEach(async production => await _productionRepository.InsertAsync(production));
+            products.ForEach(async product =>
+            {
+                var isExist = await _productRepository.IsExistAsync(product);
+                if (isExist)
+                    throw new ProductAlreadyExistsException();
 
-            var response = await _productionRepository.SaveChangesAsync();
+                await _productRepository.InsertAsync(product);
+            });
+
+            var response = await _productRepository.SaveChangesAsync();
 
             return response;
         }

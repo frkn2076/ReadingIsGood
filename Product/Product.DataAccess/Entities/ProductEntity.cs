@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Product.DataAccess.Entities
 {
-    public class Production : Audit
+    public class ProductEntity : Audit
     {
         [Key]
         public int Id { get; set; }

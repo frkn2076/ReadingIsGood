@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Mapster;
+﻿using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,17 +7,19 @@ using Product.Api.ViewModels.Responses;
 using Product.Business;
 using Product.Business.DTOs;
 using Shared.Messages;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Product.Api.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class ProductionController : ControllerBase
+    public class ProductController : ControllerBase
     {
-        private readonly ILogger<ProductionController> _logger;
+        private readonly ILogger<ProductController> _logger;
         private readonly IBusinessManager _businessManager;
 
-        public ProductionController(ILogger<ProductionController> logger, IBusinessManager businessManager)
+        public ProductController(ILogger<ProductController> logger, IBusinessManager businessManager)
         {
             _logger = logger;
             _businessManager = businessManager;

@@ -6,4 +6,9 @@ namespace Product.Infra.Exceptions
     {
         public ProductNotFoundException() : base("Product not found", 200) { }
     }
+
+    public class ProductAlreadyExistsException : DefinedException
+    {
+        public ProductAlreadyExistsException() : base("This product already exists.", 201) { }
+    }
 }

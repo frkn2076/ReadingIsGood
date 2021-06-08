@@ -11,7 +11,7 @@ namespace Product.Api.Mapper
         {
             TypeAdapterConfig<ProductRequestViewModel, ProductRequestDTO>.NewConfig();
 
-            TypeAdapterConfig<Production, ProductResponseDTO>.NewConfig();
+            TypeAdapterConfig<ProductEntity, ProductResponseDTO>.NewConfig();
 
         }
     }

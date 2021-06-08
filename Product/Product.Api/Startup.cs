@@ -40,7 +40,7 @@ namespace Product.Api
             var redisSettings = Configuration.Bind<RedisSettings>();
             services.RedisRegistration(redisSettings);
 
-            services.AddScoped<IProductionRepository, ProductionRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IBusinessManager, BusinessManager>();
         }
 
