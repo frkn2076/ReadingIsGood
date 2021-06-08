@@ -2,9 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>3675fc04-8355-414c-99e4-920d20239647</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
     <PackageReference Include="MMLib.SwaggerForOcelot" Version="4.4.1" />
     <PackageReference Include="Ocelot" Version="17.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
