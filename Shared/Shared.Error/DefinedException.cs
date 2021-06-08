@@ -13,4 +13,9 @@ namespace Shared.Error
     {
         public SomethingWentWrongDuringDatabaseOperationException() : base("An error occured while executing database transaction", 700) { }
     }
+
+    public class UserClaimNotFoundException : DefinedException
+    {
+        public UserClaimNotFoundException(string claimKey) : base($"The given claim key '{claimKey}' not found in the context.", 800) { }
+    }
 }

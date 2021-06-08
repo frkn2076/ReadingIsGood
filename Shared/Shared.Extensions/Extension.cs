@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Shared.Extensions.Config;
 using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 
 namespace Shared.Extensions
@@ -63,6 +66,12 @@ namespace Shared.Extensions
                         ValidateAudience = false
                     };
                 });
+        }
+
+        public static string GetClaim(this ClaimsPrincipal user, string key)
+        {
+            var identity = user.Identity as ClaimsIdentity;
+            return identity?.FindFirst(key)?.Value;
         }
     }
 }
