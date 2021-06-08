@@ -1,0 +1,65 @@
+version: '3.4'
+
+services:
+  gatewayapi:
+    image: 'gatewayapi'
+    container_name: 'gatewayapi-container'
+    build: 
+      context: .
+      dockerfile: ./Gateway/Gateway.API/Dockerfile
+    ports:
+      - '5000:80'
+    restart: always
+    networks:
+      - gateway-network
+      
+  accountapi:
+    image: 'accountapi'
+    container_name: 'accountapi-container'
+    build: 
+      context: .
+      dockerfile: ./Account/Account.API/Dockerfile
+    ports:
+      - '5001:80'
+    depends_on:
+      - postgre
+    restart: always
+    networks:
+      - gateway-network
+      - account-network
+      
+  postgre:
+    image: 'postgres:13-alpine'
+    container_name: 'postgre-container'
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=12345
+    ports:
+      - '5432:5432'
+    volumes:
+      - register-volume:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - account-network
+  
+  redis:
+    image: redis:alpine
+    container_name: 'redis-container'
+    hostname: 'localhost'
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis-volume:/data
+    restart: always
+    networks:
+      - gateway-network
+
+volumes:
+  account-volume:
+  redis-volume:
+
+networks:
+  account-network:
+    driver: bridge
+  gateway-network:
+    driver: bridge
