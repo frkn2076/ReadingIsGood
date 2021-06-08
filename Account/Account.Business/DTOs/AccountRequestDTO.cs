@@ -1,6 +1,6 @@
 ﻿namespace Account.Business.DTOs
 {
-    public class RegisterRequestDTO
+    public class AccountRequestDTO
     {
         public string UserName { get; init; }
         public string Name { get; init; }

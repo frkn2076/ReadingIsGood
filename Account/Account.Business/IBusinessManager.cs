@@ -8,13 +8,13 @@ namespace Account.Business
         /// <summary>
         /// User logins the system. 
         /// </summary>
-        /// <returns>User's Unique Id</returns>
-        Task<int> LoginAsync(RegisterRequestDTO model);
+        /// <returns>RegisterResponseDTO</returns>
+        Task<AccountResponseDTO> LoginAsync(AccountRequestDTO model);
 
         /// <summary>
         /// User registers the system. 
         /// </summary>
-        /// <returns>User's Unique Id</returns>
-        Task<int> RegisterAsync(RegisterRequestDTO model);
+        /// <returns>RegisterResponseDTO</returns>
+        Task<AccountResponseDTO> RegisterAsync(AccountRequestDTO model);
     }
 }

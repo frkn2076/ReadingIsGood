@@ -13,18 +13,20 @@ namespace Account.Business.Implementations
         private readonly IRegisterRepository _registerRepository;
         public BusinessManager(IRegisterRepository registerRepository) => _registerRepository = registerRepository;
 
-        private async Task<int> LoginAsync(RegisterRequestDTO model)
+        private async Task<AccountResponseDTO> LoginAsync(AccountRequestDTO model)
         {
             var registrationEntity = model.Adapt<Registration>();
 
             var user = await _registerRepository.GetUserAsync(registrationEntity);
             if (user is null)
                 throw new AccountNotFoundException();
-            
-            return user.Id;
+
+            var response = user.Adapt<AccountResponseDTO>();
+
+            return response;
         }
 
-        private async Task<int> RegisterAsync(RegisterRequestDTO model)
+        private async Task<AccountResponseDTO> RegisterAsync(AccountRequestDTO model)
         {
             var isExist = await _registerRepository.IsUserNameExistAsync(model.UserName);
             if (isExist)
@@ -39,12 +41,14 @@ namespace Account.Business.Implementations
             if (user is null)
                 throw new SomethingWentWrongDuringDatabaseOperationException();
 
-            return user.Id;
+            var response = user.Adapt<AccountResponseDTO>();
+
+            return response;
         }
 
         #region Explicit Interface Definitions
-        Task<int> IBusinessManager.LoginAsync(RegisterRequestDTO model) => LoginAsync(model);
-        Task<int> IBusinessManager.RegisterAsync(RegisterRequestDTO model) => RegisterAsync(model);
+        Task<AccountResponseDTO> IBusinessManager.LoginAsync(AccountRequestDTO model) => LoginAsync(model);
+        Task<AccountResponseDTO> IBusinessManager.RegisterAsync(AccountRequestDTO model) => RegisterAsync(model);
         #endregion
     }
 }

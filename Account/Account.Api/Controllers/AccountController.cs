@@ -4,6 +4,7 @@ using Account.Business.DTOs;
 using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Constants;
 using Shared.Messages;
 using System.Threading.Tasks;
 
@@ -15,7 +16,6 @@ namespace Account.Api.Controllers
     {
         private readonly IBusinessManager _businessManager;
         private readonly IAuthenticationManager _authenticationManager;
-        private const string ClaimName = "UserID";
 
         public AccountController(IBusinessManager businessManager, IAuthenticationManager authenticationManager)
         {
@@ -31,12 +31,14 @@ namespace Account.Api.Controllers
         [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> Login(RegisterRequestViewModel register)
         {
-            var model = register.Adapt<RegisterRequestDTO>();
-            var userID = await _businessManager.LoginAsync(model);
+            var model = register.Adapt<AccountRequestDTO>();
+            var user = await _businessManager.LoginAsync(model);
 
-            var token = await _authenticationManager.GenerateToken((ClaimName, userID.ToString()));
+            var token = await _authenticationManager.GenerateToken((CommonConstants.AccountIdClaimName, user?.UserId?.ToString()));
 
             var response = TypeAdapter.Adapt(token, BaseResponse.Success);
+
+            HttpContext.Session.SetString(CommonConstants.CustomerNameSessionKey, user?.CustomerName);
 
             return Ok(response);
         }
@@ -49,12 +51,14 @@ namespace Account.Api.Controllers
         [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> Register(RegisterRequestViewModel register)
         {
-            var model = register.Adapt<RegisterRequestDTO>();
-            var userID = await _businessManager.RegisterAsync(model);
+            var model = register.Adapt<AccountRequestDTO>();
+            var user = await _businessManager.RegisterAsync(model);
 
-            var token = await _authenticationManager.GenerateToken((ClaimName, userID.ToString()));
+            var token = await _authenticationManager.GenerateToken((CommonConstants.AccountIdClaimName, user?.UserId?.ToString()));
 
             var response = TypeAdapter.Adapt(token, BaseResponse.Success);
+
+            HttpContext.Session.SetString(CommonConstants.CustomerNameSessionKey, user?.CustomerName);
 
             return Ok(response);
         }
