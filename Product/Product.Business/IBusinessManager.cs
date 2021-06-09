@@ -9,7 +9,7 @@ namespace Product.Business
         Task<List<ProductResponseDTO>> GetAllProducts();
         Task<List<ProductResponseDTO>> GetProductsInterval(ProductIntervalRequestDTO model);
         Task<ProductResponseDTO> GetProduct(int id);
-        Task<int> AddProduct(ProductRequestDTO model);
-        Task<int> AddProducts(IReadOnlyList<ProductRequestDTO> model);
+        Task AddProduct(ProductRequestDTO model);
+        Task AddProducts(IReadOnlyList<ProductRequestDTO> model);
     }
 }

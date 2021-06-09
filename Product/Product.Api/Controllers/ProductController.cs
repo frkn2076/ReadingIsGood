@@ -8,6 +8,7 @@ using Product.Business;
 using Product.Business.DTOs;
 using Shared.Messages;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Product.Api.Controllers
@@ -45,9 +46,13 @@ namespace Product.Api.Controllers
         /// <returns>BaseResponse</returns>
         [HttpPost]
         [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> AddProducts(ProductsRequestViewModel request)
         {
-            var model = request.Adapt<List<ProductRequestDTO>>();
+            if (request?.Products is null)
+                return BadRequest(BaseResponse.Fail);
+
+            var model = request.Products.Adapt<List<ProductRequestDTO>>();
             await _businessManager.AddProducts(model);
 
             return Ok(BaseResponse.Success);
@@ -103,7 +108,5 @@ namespace Product.Api.Controllers
 
             return Ok(response);
         }
-
-
     }
 }

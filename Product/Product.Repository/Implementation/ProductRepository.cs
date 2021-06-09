@@ -23,8 +23,8 @@ namespace Product.Repository.Implementation
 
         private async Task<ProductEntity> InsertAsync(ProductEntity product) => (await _context.Products.AddAsync(product)).Entity;
 
-        private async Task<bool> IsExistAsync(ProductEntity product) => await _context.Products.AsNoTracking()
-            .AnyAsync(x => x.Name == product.Name && x.Color == product.Color && x.Volume == product.Volume && x.Weight == product.Weight);
+        private async Task<bool> IsExistAsync(ProductEntity product) => await _context.Products
+            .AnyAsync(x => x.Name == product.Name && x.Volume == product.Volume && x.Weight == product.Weight);
 
         private async Task<int> SaveChangesAsync(CancellationToken cancellationToken) => await _context.SaveChangesAsync(cancellationToken);
 

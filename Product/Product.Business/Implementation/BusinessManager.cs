@@ -46,7 +46,7 @@ namespace Product.Business.Implementation
             return response;
         }
 
-        private async Task<int> AddProduct(ProductRequestDTO model)
+        private async Task AddProduct(ProductRequestDTO model)
         {
             var productEntity = model.Adapt<ProductEntity>();
 
@@ -58,35 +58,31 @@ namespace Product.Business.Implementation
             if (product is null)
                 throw new SomethingWentWrongDuringDatabaseOperationException();
 
-            var response = await _productRepository.SaveChangesAsync();
-
-            return response;
+            await _productRepository.SaveChangesAsync();
         }
 
-        private async Task<int> AddProducts(IReadOnlyList<ProductRequestDTO> model)
+        private async Task AddProducts(IReadOnlyList<ProductRequestDTO> model)
         {
             var products = model.Adapt<List<ProductEntity>>();
 
-            products.ForEach(async product =>
+            foreach (var product in products)
             {
                 var isExist = await _productRepository.IsExistAsync(product);
                 if (isExist)
                     throw new ProductAlreadyExistsException();
 
                 await _productRepository.InsertAsync(product);
-            });
+            }
 
-            var response = await _productRepository.SaveChangesAsync();
-
-            return response;
+            await _productRepository.SaveChangesAsync();
         }
 
         #region Explicit Interface Definitions
         Task<List<ProductResponseDTO>> IBusinessManager.GetAllProducts() => GetAllProducts();
         Task<List<ProductResponseDTO>> IBusinessManager.GetProductsInterval(ProductIntervalRequestDTO model) => GetProductsInterval(model);
         Task<ProductResponseDTO> IBusinessManager.GetProduct(int id) => GetProduct(id);
-        Task<int> IBusinessManager.AddProduct(ProductRequestDTO model) => AddProduct(model);
-        Task<int> IBusinessManager.AddProducts(IReadOnlyList<ProductRequestDTO> model) => AddProducts(model);
+        Task IBusinessManager.AddProduct(ProductRequestDTO model) => AddProduct(model);
+        Task IBusinessManager.AddProducts(IReadOnlyList<ProductRequestDTO> model) => AddProducts(model);
         #endregion
     }
 }

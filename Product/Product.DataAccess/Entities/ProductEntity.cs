@@ -10,8 +10,6 @@ namespace Product.DataAccess.Entities
         [Required]
         public string Name { get; set; }
         [Required]
-        public string Color { get; set; }
-        [Required]
         public string Weight { get; set; }
         [Required]
         public string Volume { get; set; }
