@@ -17,20 +17,30 @@
         "Period": "1m",
         "PeriodTimespan": 600,
         "Limit": 30
-      },
-      "SwaggerKey": "Account"
-    }
-  ],
-  "SwaggerEndPoints": [
+      }
+    },
     {
-      "Key": "Account",
-      "Config": [
+      "DownstreamPathTemplate": "/Product/{url}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
         {
-          "Name": "Account.Api",
-          "Version": "v1",
-          "Url": "https://localhost:5001/swagger/v1/swagger.json"
+          "Host": "localhost",
+          "Port": 5002
         }
-      ]
+      ],
+      "UpstreamPathTemplate": "/api/Product/{url}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Pr0ViderKey",
+        "AllowedScopes": []
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 600,
+        "Limit": 30
+      }
     }
   ],
   "GlobalConfiguration": {
