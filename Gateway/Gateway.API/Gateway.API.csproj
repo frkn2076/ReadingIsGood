@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared.Extensions\Shared.Extensions.csproj" />
+    <ProjectReference Include="..\Gateway.Infra\Gateway.Infra.csproj" />
   </ItemGroup>
 
 </Project>
