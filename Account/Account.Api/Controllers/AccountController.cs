@@ -2,6 +2,7 @@
 using Account.Business;
 using Account.Business.DTOs;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Constants;
@@ -27,9 +28,10 @@ namespace Account.Api.Controllers
         /// User logins the system. 
         /// </summary>
         /// <returns>BaseResponse</returns>
+        [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Login(RegisterRequestViewModel register)
+        public async Task<IActionResult> Login(AccountRequestViewModel register)
         {
             var model = register.Adapt<AccountRequestDTO>();
             var user = await _businessManager.LoginAsync(model);
@@ -47,9 +49,10 @@ namespace Account.Api.Controllers
         /// User registers the system. 
         /// </summary>
         /// <returns>BaseResponse</returns>
+        [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Register(RegisterRequestViewModel register)
+        public async Task<IActionResult> Register(AccountRequestViewModel register)
         {
             var model = register.Adapt<AccountRequestDTO>();
             var user = await _businessManager.RegisterAsync(model);
@@ -68,6 +71,7 @@ namespace Account.Api.Controllers
         /// with refresh token sent by header. Refresh token and its expiration date will remain same.
         /// </summary>
         /// <returns>BaseResponse</returns>
+        [AllowAnonymous]
         [HttpGet]
         [ProducesResponseType(typeof(BaseResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> RefreshToken()

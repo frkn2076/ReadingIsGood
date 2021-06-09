@@ -10,7 +10,7 @@ namespace Account.Api.Mapper
     {
         public static void MapsterInit()
         {
-            TypeAdapterConfig<RegisterRequestViewModel, AccountRequestDTO>.NewConfig();
+            TypeAdapterConfig<AccountRequestViewModel, AccountRequestDTO>.NewConfig();
 
             TypeAdapterConfig<AccountRequestDTO, Registration>.NewConfig()
                 .Map(dest => dest.Password, src => Helper.SHA512(src.Password));

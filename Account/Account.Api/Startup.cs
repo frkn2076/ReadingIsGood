@@ -31,7 +31,7 @@ namespace Account.Api
             services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "Account.Api", Version = "v1" }));
 
             var jwtSettings = Configuration.Bind<JWTSettings>();
-            services.JWTRegistration(jwtSettings);
+            //services.JWTRegistration(jwtSettings);
             services.AddSingleton(jwtSettings);
 
             var postgreSettings = Configuration.Bind<PostgreSettings>();
@@ -54,7 +54,7 @@ namespace Account.Api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Account.Api - v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Account.Api v1"));
             }
 
             app.MigrateDatabaseAndTables<AccountDBContext>();
@@ -65,7 +65,7 @@ namespace Account.Api
 
             app.UseRouting();
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
             
             app.UseSession();
 
