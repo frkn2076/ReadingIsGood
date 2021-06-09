@@ -6,7 +6,7 @@ services:
     container_name: 'gatewayapi-container'
     build: 
       context: .
-      dockerfile: ./Gateway/Gateway.API/Dockerfile
+      dockerfile: ./Gateway/Gateway.Api/Dockerfile
     ports:
       - '5000:80'
     restart: always
