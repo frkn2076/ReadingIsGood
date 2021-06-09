@@ -1,3 +1,4 @@
+using Gateway.Infra.Middlewares.LoggingMiddleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +8,7 @@ using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Shared.Extensions;
 using Shared.Extensions.Config;
+using System;
 
 namespace Gateway.Api
 {
@@ -37,7 +39,7 @@ namespace Gateway.Api
 
             app.UseHttpsRedirection();
 
-            //app.UseMiddleware<RequestResponseLoggingMiddleware>((Action<string>)Publisher.Send);
+            app.UseMiddleware<RequestResponseLoggingMiddleware>((Action<string>)Console.WriteLine);
 
             app.UseRouting();
 
