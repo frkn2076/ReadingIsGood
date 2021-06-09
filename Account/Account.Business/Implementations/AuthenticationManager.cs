@@ -1,5 +1,6 @@
 ﻿using Account.Business.DTOs;
 using Account.DataAccess.Entities;
+using Account.Infra.Exceptions;
 using Account.Repository;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -79,7 +80,12 @@ namespace Account.Business.Implementations
 
         private async Task<TokenResponseDTO> RefreshToken(string refreshToken)
         {
+            if (string.IsNullOrWhiteSpace(refreshToken))
+                throw new RefreshTokenIsNullOrWhiteSpaceException();
+
             var authenticationEntity = await _authenticationRepository.GetAuthenticationAsync(refreshToken);
+            if (authenticationEntity is null)
+                throw new RefreshTokenNotException();
 
             var handler = new JwtSecurityTokenHandler();
             var token = handler.ReadJwtToken(authenticationEntity.AccessToken);
